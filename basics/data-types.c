@@ -11,5 +11,12 @@ int main() {
 	double amount = 12.4545456457;
 	long double fractionOfDistance = 1.123124234354367567658;
 
+	// chars
+	char nameInitial = 'A';
+	char lnameInitial = 'Y';
+	char name[] = "Artem";
+
+	printf("name is: %s", name);
+
 	return 0;
 }
