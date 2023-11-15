@@ -2,6 +2,9 @@
 
 void add(int *n);
 
+// typedef
+typedef int BIG_INT; 
+
 int main() {
 	// numbers
 	int income = 2000000;
@@ -23,11 +26,14 @@ int main() {
 
 	add(&count);
 
-	printf("count is: %d", count);
+	// typedef
+	BIG_INT population = 40000000;
+
+	printf("count is: %d", population);
 
 	return 0;
 }
 
 void add(int *n) {
-	n = n + 1;
+	*n = *n + 1;
 }
