@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+// functions
 void add(int *n);
 
 // typedef
@@ -34,6 +35,7 @@ int main() {
 	return 0;
 }
 
+// functions
 void add(int *n) {
 	*n = *n + 1;
 }
