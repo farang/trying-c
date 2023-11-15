@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+void add(int *n);
+
 int main() {
 	// numbers
 	int income = 2000000;
@@ -16,7 +18,16 @@ int main() {
 	char lnameInitial = 'Y';
 	char name[] = "Artem";
 
-	printf("name is: %s", name);
+	// pointer test
+	int count = 0;
+
+	add(&count);
+
+	printf("count is: %d", count);
 
 	return 0;
+}
+
+void add(int *n) {
+	n = n + 1;
 }
