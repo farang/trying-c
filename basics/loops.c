@@ -18,6 +18,20 @@ int main() {
 	i++;
     }
 
+    // do while
+    int i2 = 1;
+
+    do {
+	printf("do while %d\n", i2);
+    	i2++;
+    } while (i2 < 8);
+
+    int i3 = 0;
+
+    do {
+    	printf("executed at least once");
+    } while (i3 > 0);
+
     return 0;	
 }
 
