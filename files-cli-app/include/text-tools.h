@@ -1,0 +1,1 @@
+void removeLineBreaks(char *str);
