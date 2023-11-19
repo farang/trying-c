@@ -37,6 +37,7 @@ int main()
 	// entity name
 	printf("Enter name:\n");
 	fgets(entityName, sizeof(entityName), stdin);
+	removeLineBreaks(entityName);
 
 	// if file creation requested, create and stop execution
 	if (entityToCreate == File)
@@ -53,9 +54,16 @@ int main()
 	// check if subitem shoud be created
 	printf("Do you want to create subitems?(y/n)\n");
 	fgets(userInput, sizeof(userInput), stdin);
+	removeLineBreaks(userInput);
 
 	if (strcmp(userInput, "y") == 0)
 	{
+		if (createEntity(entityToCreate, entityName) != 0)
+		{
+			perror("failed to create directory");
+			return 1;
+		}
+
 		char namesList[400];
 		printf("Enter subitems names. [name].[extension],[name].[extension]...\n");
 		fgets(namesList, sizeof(namesList), stdin);
@@ -71,7 +79,7 @@ int main()
 			strcat(path, "/");
 			strcat(path, fileName);
 			createEntity(File, path);
-			fileName = strtok(namesList, separator);
+			fileName = strtok(NULL, separator);
 		}
 	}
 	else
