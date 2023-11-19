@@ -43,11 +43,10 @@ int main()
 	{
 		if (createEntity(entityToCreate, entityName) == 0)
 		{
-			printf("successfully created file");
+			printf("successfully created file\n");
 			return 0;
 		}
-		perror("failed to create file");
-		return 1;
+		return fprintf(stderr, "failed to create file with name: %s\n", entityName);
 	}
 
 	// check if subitem shoud be created
@@ -59,8 +58,7 @@ int main()
 	{
 		if (createEntity(entityToCreate, entityName) != 0)
 		{
-			perror("failed to create directory");
-			return 1;
+			return fprintf(stderr, "failed to create directory: %s\n", entityName);
 		}
 
 		char namesList[400];
@@ -77,7 +75,10 @@ int main()
 			strcpy(path, entityName);
 			strcat(path, "/");
 			strcat(path, fileName);
-			createEntity(File, path);
+			if (createEntity(File, path) != 0)
+			{
+				return fprintf(stderr, "failed to create file: %s\n", fileName);
+			}
 			fileName = strtok(NULL, separator);
 		}
 	}
@@ -85,11 +86,11 @@ int main()
 	{
 		if (createEntity(entityToCreate, entityName) == 0)
 		{
-			printf("successfully created");
+			printf("successfully created\n");
 		}
 		else
 		{
-			perror("failed to create");
+			return fprintf(stderr, "failed to create: %s\n", entityName);
 		}
 	}
 
