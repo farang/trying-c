@@ -56,7 +56,23 @@ int main()
 
 	if (strcmp(userInput, "y") == 0)
 	{
-		// enter subitems info
+		char namesList[400];
+		printf("Enter subitems names. [name].[extension],[name].[extension]...\n");
+		fgets(namesList, sizeof(namesList), stdin);
+		removeLineBreaks(namesList);
+
+		const char separator[] = ",";
+		char *fileName = strtok(namesList, separator);
+
+		while (fileName != NULL)
+		{
+			char path[100];
+			strcpy(path, entityName);
+			strcat(path, "/");
+			strcat(path, fileName);
+			createEntity(File, path);
+			fileName = strtok(namesList, separator);
+		}
 	}
 	else
 	{
