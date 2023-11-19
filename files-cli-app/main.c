@@ -13,7 +13,7 @@ int main()
 	fgets(userInput, sizeof(userInput), stdin);
 	removeLineBreaks(userInput);
 
-	char message[100];
+	char message[100] = "";
 	enum EntityType entityToCreate;
 	char entityName[100];
 
@@ -29,8 +29,7 @@ int main()
 	}
 	else
 	{
-		perror(userInput);
-		return 1;
+		return fprintf(stderr, "wrong value provided: %s\n", userInput);
 	}
 	strcat(message, "will be created.\n");
 
