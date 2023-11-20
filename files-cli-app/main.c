@@ -6,16 +6,22 @@
 
 int main()
 {
+	const int maxCommandInputSize = 10;
+	const int maxMessageInputSize = 100;
+	const int maxEntityNameInputSize = 100;
+	const int maxFilesListInputSize = 400;
+	const int maxFilePathInputSize = 100;
+
 	// entity type to create
-	char userInput[10];
+	char userInput[maxCommandInputSize];
 
 	printf("enter what you want to create: d(directory), f(folder):\n");
 	fgets(userInput, sizeof(userInput), stdin);
 	removeLineBreaks(userInput);
 
-	char message[100] = "";
+	char message[maxMessageInputSize] = "";
 	enum EntityType entityToCreate;
-	char entityName[100];
+	char entityName[maxEntityNameInputSize];
 
 	if (strcmp(userInput, "d") == 0)
 	{
@@ -49,7 +55,7 @@ int main()
 		return fprintf(stderr, "failed to create file with name: %s\n", entityName);
 	}
 
-	// check if subitem shoud be created
+	// check if subitem should be created
 	printf("Do you want to create subitems?(y/n)\n");
 	fgets(userInput, sizeof(userInput), stdin);
 	removeLineBreaks(userInput);
@@ -61,7 +67,7 @@ int main()
 			return fprintf(stderr, "failed to create directory: %s\n", entityName);
 		}
 
-		char namesList[400];
+		char namesList[maxFilesListInputSize];
 		printf("Enter subitems names. [name].[extension],[name].[extension]...\n");
 		fgets(namesList, sizeof(namesList), stdin);
 		removeLineBreaks(namesList);
@@ -71,7 +77,7 @@ int main()
 
 		while (fileName != NULL)
 		{
-			char path[100];
+			char path[maxFilePathInputSize];
 			strcpy(path, entityName);
 			strcat(path, "/");
 			strcat(path, fileName);
