@@ -4,14 +4,14 @@
 #include "include/entity-tools.h"
 #include "include/text-tools.h"
 
+#define maxCommandInputSize 10
+#define maxMessageInputSize 100
+#define maxEntityNameInputSize 100
+#define maxFilesListInputSize 400
+#define maxFilePathInputSize 100
+
 int main()
 {
-	const int maxCommandInputSize = 10;
-	const int maxMessageInputSize = 100;
-	const int maxEntityNameInputSize = 100;
-	const int maxFilesListInputSize = 400;
-	const int maxFilePathInputSize = 100;
-
 	// entity type to create
 	char userInput[maxCommandInputSize];
 
