@@ -2,7 +2,7 @@
 #include <sys/stat.h>
 #include "../include/entity-type.h"
 
-int createEntity(enum EntityType type, char *name)
+int createEntity(const enum EntityType type, const char *name)
 {
     FILE *filePointer;
 
@@ -26,6 +26,8 @@ int createEntity(enum EntityType type, char *name)
         fclose(filePointer);
         return 0;
         break;
+    case Unknown:
+        return 1;
+        break;
     }
-    return 1;
 }

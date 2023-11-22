@@ -1,3 +1,3 @@
 #include "entity-type.h"
 
-int createEntity(enum EntityType type, char *name);
+int createEntity(const enum EntityType type, const char *name);

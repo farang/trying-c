@@ -1,86 +1,113 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include "include/entity-tools.h"
 #include "include/text-tools.h"
 
 #define maxCommandInputSize 10
-#define maxMessageInputSize 100
+#define maxEntityTypeInputSize 100
 #define maxEntityNameInputSize 100
 #define maxFilesListInputSize 400
-#define maxFilePathInputSize 100
+#define maxFilePathInputSize 800
+
+char *getInputWithNoBreaks(size_t size)
+{
+	char *input = malloc(size);
+
+	if (input == NULL)
+	{
+		// Handle allocation failure
+		fprintf(stderr, "Memory allocation failed\n");
+	}
+
+	fgets(input, size, stdin);
+	removeLineBreaks(input);
+	return input;
+}
+
+enum EntityType getEntityTypeInput()
+{
+	char *input = getInputWithNoBreaks(maxEntityTypeInputSize);
+
+	if (strcmp(input, "d") == 0)
+	{
+		return Directory;
+	}
+	if (strcmp(input, "f") == 0)
+	{
+		return File;
+	}
+
+	return Unknown;
+}
+
+int actionConfirmed(const char *confirmationValue)
+{
+	char *input = getInputWithNoBreaks(maxCommandInputSize);
+	return strcmp(input, confirmationValue);
+}
 
 int main()
 {
-	// entity type to create
-	char userInput[maxCommandInputSize];
-
+	// 1. handle entity type input
 	printf("enter what you want to create: d(directory), f(folder):\n");
-	fgets(userInput, sizeof(userInput), stdin);
-	removeLineBreaks(userInput);
+	const enum EntityType entityToCreate = getEntityTypeInput();
 
-	char message[maxMessageInputSize] = "";
-	enum EntityType entityToCreate;
-	char entityName[maxEntityNameInputSize];
+	if (entityToCreate == Unknown)
+	{
+		return fprintf(stderr, "wrong entity entered: %d\n", entityToCreate);
+	}
 
-	if (strcmp(userInput, "d") == 0)
-	{
-		entityToCreate = Directory;
-		strcat(message, "Directory ");
-	}
-	else if (strcmp(userInput, "f") == 0)
-	{
-		entityToCreate = File;
-		strcat(message, "File ");
-	}
-	else
-	{
-		return fprintf(stderr, "wrong value provided: %s\n", userInput);
-	}
-	strcat(message, "will be created.\n");
-
-	// entity name
+	// 2. handle entity name input
 	printf("Enter name:\n");
-	fgets(entityName, sizeof(entityName), stdin);
-	removeLineBreaks(entityName);
+	const char *entityName = getInputWithNoBreaks(maxEntityNameInputSize);
 
-	// if file creation requested, create and stop execution
+	if (strcmp(entityName, "") == 0)
+	{
+		return fprintf(stderr, "name can't be empty: %s\n", entityName);
+	}
+
+	// 3. create file because no children can be added
 	if (entityToCreate == File)
 	{
-		if (createEntity(entityToCreate, entityName) == 0)
+		printf("create file");
+		if (createEntity(entityToCreate, entityName) != 0)
 		{
-			printf("successfully created file\n");
-			return 0;
+			printf("failed create file");
+			return fprintf(stderr, "failed to create directory: %s\n", entityName);
 		}
-		return fprintf(stderr, "failed to create file with name: %s\n", entityName);
+
+		printf("created file");
+		return 0;
 	}
 
-	// check if subitem should be created
+	// 4. ask if subitem should be created inside the directory
 	printf("Do you want to create subitems?(y/n)\n");
-	fgets(userInput, sizeof(userInput), stdin);
-	removeLineBreaks(userInput);
 
-	if (strcmp(userInput, "y") == 0)
+	if (actionConfirmed("y") == 0)
 	{
-		if (createEntity(entityToCreate, entityName) != 0)
+		// 5. handle children input
+		printf("Enter subitems names. [name].[extension],[name].[extension]...\n");
+
+		char *fileNamesList = getInputWithNoBreaks(maxFilesListInputSize);
+		const char *separator = ";";
+		char *fileName = strtok(fileNamesList, separator);
+
+		// 5.1 create folder
+		if (createEntity(Directory, entityName) != 0)
 		{
 			return fprintf(stderr, "failed to create directory: %s\n", entityName);
 		}
 
-		char namesList[maxFilesListInputSize];
-		printf("Enter subitems names. [name].[extension],[name].[extension]...\n");
-		fgets(namesList, sizeof(namesList), stdin);
-		removeLineBreaks(namesList);
-
-		const char separator[] = ",";
-		char *fileName = strtok(namesList, separator);
-
+		// 5.2 create children
 		while (fileName != NULL)
 		{
 			char path[maxFilePathInputSize];
 			strcpy(path, entityName);
 			strcat(path, "/");
 			strcat(path, fileName);
+
 			if (createEntity(File, path) != 0)
 			{
 				return fprintf(stderr, "failed to create file: %s\n", fileName);

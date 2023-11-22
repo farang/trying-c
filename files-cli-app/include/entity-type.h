@@ -1,5 +1,6 @@
 enum EntityType
 {
     Directory,
-    File
+    File,
+    Unknown
 };
