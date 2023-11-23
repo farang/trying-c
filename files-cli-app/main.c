@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include "include/entity-tools.h"
 #include "include/text-tools.h"
+#include "include/cli-input.h"
 
 #define maxCommandInputSize 10
 #define maxEntityTypeInputSize 100
@@ -11,48 +12,11 @@
 #define maxFilesListInputSize 400
 #define maxFilePathInputSize 800
 
-char *getInputWithNoBreaks(size_t size)
-{
-	char *input = malloc(size);
-
-	if (input == NULL)
-	{
-		// Handle allocation failure
-		fprintf(stderr, "Memory allocation failed\n");
-	}
-
-	fgets(input, size, stdin);
-	removeLineBreaks(input);
-	return input;
-}
-
-enum EntityType getEntityTypeInput()
-{
-	char *input = getInputWithNoBreaks(maxEntityTypeInputSize);
-
-	if (strcmp(input, "d") == 0)
-	{
-		return Directory;
-	}
-	if (strcmp(input, "f") == 0)
-	{
-		return File;
-	}
-
-	return Unknown;
-}
-
-int actionConfirmed(const char *confirmationValue)
-{
-	char *input = getInputWithNoBreaks(maxCommandInputSize);
-	return strcmp(input, confirmationValue);
-}
-
 int main()
 {
 	// 1. handle entity type input
 	printf("enter what you want to create: d(directory), f(folder):\n");
-	const enum EntityType entityToCreate = getEntityTypeInput();
+	const enum EntityType entityToCreate = getEntityTypeInput(maxEntityTypeInputSize);
 
 	if (entityToCreate == Unknown)
 	{
@@ -85,7 +49,7 @@ int main()
 	// 4. ask if subitem should be created inside the directory
 	printf("Do you want to create subitems?(y/n)\n");
 
-	if (actionConfirmed("y") == 0)
+	if (actionConfirmed("y", maxCommandInputSize) == 0)
 	{
 		// 5. handle children input
 		printf("Enter subitems names. [name].[extension],[name].[extension]...\n");
