@@ -29,7 +29,9 @@ int main()
 
 	if (strcmp(entityName, "") == 0)
 	{
-		return fprintf(stderr, "name can't be empty: %s\n", entityName);
+		fprintf(stderr, "name can't be empty: %s\n", entityName);
+		free((void *)entityName);
+		return -1;
 	}
 
 	// 3. create file because no children can be added
@@ -38,11 +40,13 @@ int main()
 		printf("create file");
 		if (createEntity(entityToCreate, entityName) != 0)
 		{
-			printf("failed create file");
-			return fprintf(stderr, "failed to create directory: %s\n", entityName);
+			fprintf(stderr, "failed to create file: %s\n", entityName);
+			free((void *)entityName);
+			return -1;
 		}
 
 		printf("created file");
+		free((void *)entityName);
 		return 0;
 	}
 
@@ -61,7 +65,9 @@ int main()
 		// 5.1 create folder
 		if (createEntity(Directory, entityName) != 0)
 		{
-			return fprintf(stderr, "failed to create directory: %s\n", entityName);
+			fprintf(stderr, "failed to create directory: %s\n", entityName);
+			free((void *)entityName);
+			return -1;
 		}
 
 		// 5.2 create children
@@ -74,7 +80,11 @@ int main()
 
 			if (createEntity(File, path) != 0)
 			{
-				return fprintf(stderr, "failed to create file: %s\n", fileName);
+				fprintf(stderr, "failed to create file: %s\n", fileName);
+				free((void *)entityName);
+				free(fileNamesList);
+				free(fileName);
+				return -1;
 			}
 			fileName = strtok(NULL, separator);
 		}
@@ -87,9 +97,12 @@ int main()
 		}
 		else
 		{
-			return fprintf(stderr, "failed to create: %s\n", entityName);
+			fprintf(stderr, "failed to create: %s\n", entityName);
+			free((void *)entityName);
+			return -1;
 		}
 	}
 
+	free((void *)entityName);
 	return 0;
 }
