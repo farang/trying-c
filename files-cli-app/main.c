@@ -15,7 +15,7 @@
 int main()
 {
 	// 1. handle entity type input
-	printf("enter what you want to create: d(directory), f(folder):\n");
+	printf("enter what you want to create: d(directory), f(file):\n");
 	const enum EntityType entityToCreate = getEntityTypeInput(maxEntityTypeInputSize);
 
 	if (entityToCreate == Unknown)
