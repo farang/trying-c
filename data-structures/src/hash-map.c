@@ -1,16 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-struct HashMapNode
-{
-    int value;
-};
-
-struct HashMap
-{
-    struct HashMapNode **nodes;
-    int size;
-};
+#include "hash-map.h"
 
 struct HashMapNode *createNode(int value)
 {

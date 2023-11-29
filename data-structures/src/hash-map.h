@@ -1,7 +1,14 @@
 
-struct HashMapNode;
+struct HashMapNode
+{
+    int value;
+};
 
-struct HashMap;
+struct HashMap
+{
+    struct HashMapNode **nodes;
+    int size;
+};
 
 struct HashMapNode *createNode(int value);
 
