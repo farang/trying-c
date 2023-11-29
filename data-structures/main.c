@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "src/hash-map.h"
-#include "src/linked-list.h"
+#include "src/hash-maps/hash-map.h"
+#include "src/linked-lists/linked-list.h"
 
 // try data structures usage
 int main()
