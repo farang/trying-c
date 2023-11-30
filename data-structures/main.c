@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "src/hash-maps/hash-map.h"
 #include "src/linked-lists/linked-list.h"
+#include "src/stacks/stack.h"
 
 // try data structures usage
 int main()
@@ -13,6 +14,7 @@ int main()
 
     int value1 = getHashMapValue(map, "key1");
 
+    printf("HASH MAP\n");
     printf("value by key 1: %d\n", value1);
 
     deleteHashMapValue(map, "key1");
@@ -30,6 +32,7 @@ int main()
     unshiftToLinkedList(tabsChain, 33);
 
     struct LinkedListNode *currentTab = tabsChain->head;
+    printf("LINKED LIST\n");
     printf("tab 1: %d\n", currentTab->value);
 
     currentTab = currentTab->next;
@@ -48,6 +51,26 @@ int main()
     printf("tab 6: %d\n", currentTab->value);
 
     freeLinkedList(tabsChain);
+
+    /*
+        Try stack
+    */
+    struct Stack *pages = createStack(3);
+
+    addToStack(pages, 1);
+    addToStack(pages, 2);
+    addToStack(pages, 3);
+    addToStack(pages, 4);
+    addToStack(pages, 5);
+
+    printf("STACK\n");
+    printf("page: %d\n", getFromToStack(pages));
+    printf("page: %d\n", getFromToStack(pages));
+    printf("page: %d\n", getFromToStack(pages));
+    printf("page: %d\n", getFromToStack(pages));
+    printf("page: %d\n", getFromToStack(pages));
+
+    freeStack(pages);
 
     return 0;
 }
