@@ -2,6 +2,7 @@
 #include "src/hash-maps/hash-map.h"
 #include "src/linked-lists/linked-list.h"
 #include "src/stacks/stack.h"
+#include "src/queues/queue.h"
 
 // try data structures usage
 int main()
@@ -55,7 +56,7 @@ int main()
     /*
         Try stack
     */
-    struct Stack *pages = createStack(3);
+    struct Stack *pages = createStack(5);
 
     addToStack(pages, 1);
     addToStack(pages, 2);
@@ -71,6 +72,22 @@ int main()
     printf("page: %d\n", getFromToStack(pages));
 
     freeStack(pages);
+
+    /*
+        Try Queue
+    */
+    struct Queue *processingQueue = createQueue(3);
+
+    addToQueue(processingQueue, -1);
+    addToQueue(processingQueue, 0);
+    addToQueue(processingQueue, 1);
+
+    printf("QUEUE\n");
+    printf("process: %d\n", getFromQueue(processingQueue));
+    printf("process: %d\n", getFromQueue(processingQueue));
+    printf("process: %d\n", getFromQueue(processingQueue));
+
+    freeQueue(processingQueue);
 
     return 0;
 }
