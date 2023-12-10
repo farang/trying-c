@@ -1,10 +1,12 @@
-struct BinaryTree
+struct BinaryTreeNode
 {
     int value;
-    struct BinaryTree *left;
-    struct BinaryTree *right;
+    struct BinaryTreeNode *left;
+    struct BinaryTreeNode *right;
 };
 
-struct BinaryTree *createBinaryTreeNode(int value);
+struct BinaryTreeNode *createBinaryTreeNode(int value);
 
-struct BinaryTree *insertIntoBinaryTree(struct BinaryTree *rootTree, int value);
+void insertIntoBinaryTreeLeft(struct BinaryTreeNode *rootTree, int value);
+
+void insertIntoBinaryTreeRight(struct BinaryTreeNode *rootTree, int value);
