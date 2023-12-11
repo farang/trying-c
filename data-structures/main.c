@@ -3,6 +3,7 @@
 #include "src/linked-lists/linked-list.h"
 #include "src/stacks/stack.h"
 #include "src/queues/queue.h"
+#include "src/trees/binary-tree.h"
 
 // try data structures usage
 int main()
@@ -88,6 +89,21 @@ int main()
     printf("process: %d\n", getFromQueue(processingQueue));
 
     freeQueue(processingQueue);
+
+    /*
+        Binary tree
+    */
+    struct BinaryTreeNode *rootBinaryTreeNode = createBinaryTreeNode(12);
+
+    insertIntoBinaryTreeLeft(rootBinaryTreeNode, 1);
+    insertIntoBinaryTreeRight(rootBinaryTreeNode, 15);
+
+    struct BinaryTreeNode *smallestBinaryTreeNode = rootBinaryTreeNode->left;
+    struct BinaryTreeNode *highestBinaryTreeNode = rootBinaryTreeNode->right;
+
+    printf("Tree\n");
+    printf("smallest value: %d\n", smallestBinaryTreeNode->value);
+    printf("highest value: %d\n", highestBinaryTreeNode->value);
 
     return 0;
 }
