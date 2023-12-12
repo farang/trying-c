@@ -101,9 +101,14 @@ int main()
     struct BinaryTreeNode *smallestBinaryTreeNode = rootBinaryTreeNode->left;
     struct BinaryTreeNode *highestBinaryTreeNode = rootBinaryTreeNode->right;
 
+    insertIntoBinaryTreeRight(highestBinaryTreeNode, 3);
+
+    int treeSize = getBinaryTreeSize(rootBinaryTreeNode);
+
     printf("Tree\n");
     printf("smallest value: %d\n", smallestBinaryTreeNode->value);
     printf("highest value: %d\n", highestBinaryTreeNode->value);
+    printf("tree size: %d \n", treeSize);
 
     return 0;
 }

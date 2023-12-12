@@ -7,6 +7,8 @@ struct BinaryTreeNode
 
 struct BinaryTreeNode *createBinaryTreeNode(int value);
 
-void insertIntoBinaryTreeLeft(struct BinaryTreeNode *rootTree, int value);
+void insertIntoBinaryTreeLeft(struct BinaryTreeNode *treeNode, int value);
 
-void insertIntoBinaryTreeRight(struct BinaryTreeNode *rootTree, int value);
+void insertIntoBinaryTreeRight(struct BinaryTreeNode *treeNode, int value);
+
+int getBinaryTreeSize(struct BinaryTreeNode *rootTree);
