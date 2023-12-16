@@ -14,3 +14,5 @@ void insertIntoBinaryTreeRight(struct BinaryTreeNode *treeNode, int value);
 int getBinaryTreeSize(struct BinaryTreeNode *rootTree);
 
 int getBinaryTreeHeight(struct BinaryTreeNode *rootTree);
+
+int freeBinaryTree(struct BinaryTreeNode *rootTree);
