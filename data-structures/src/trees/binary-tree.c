@@ -43,3 +43,23 @@ int getBinaryTreeSize(struct BinaryTreeNode *rootTree)
 
     return size;
 }
+
+int getBinaryTreeHeight(struct BinaryTreeNode *rootTree)
+{
+    if (rootTree == NULL)
+    {
+        return 0;
+    }
+
+    int heightOfLeft = getBinaryTreeHeight(rootTree->left);
+    int heightOfRight = getBinaryTreeHeight(rootTree->right);
+
+    if (heightOfLeft > heightOfRight)
+    {
+        return heightOfLeft + 1;
+    }
+    else
+    {
+        return heightOfRight + 1;
+    }
+}

@@ -98,17 +98,29 @@ int main()
     insertIntoBinaryTreeLeft(rootBinaryTreeNode, 1);
     insertIntoBinaryTreeRight(rootBinaryTreeNode, 15);
 
-    struct BinaryTreeNode *smallestBinaryTreeNode = rootBinaryTreeNode->left;
-    struct BinaryTreeNode *highestBinaryTreeNode = rootBinaryTreeNode->right;
+    struct BinaryTreeNode *leftBinaryTreeNode1 = rootBinaryTreeNode->left;
+    struct BinaryTreeNode *rightBinaryTreeNode1 = rootBinaryTreeNode->right;
 
-    insertIntoBinaryTreeRight(highestBinaryTreeNode, 3);
+    insertIntoBinaryTreeRight(rightBinaryTreeNode1, 3);
 
-    int treeSize = getBinaryTreeSize(rootBinaryTreeNode);
+    struct BinaryTreeNode *rightBinaryTreeNode2 = rightBinaryTreeNode1->right;
+
+    insertIntoBinaryTreeRight(rightBinaryTreeNode2, 99);
+    insertIntoBinaryTreeLeft(rightBinaryTreeNode2, 69);
+
+    struct BinaryTreeNode *rightBinaryTreeNode3 = rightBinaryTreeNode2->right;
+
+    insertIntoBinaryTreeRight(rightBinaryTreeNode3, 100);
+    insertIntoBinaryTreeLeft(rightBinaryTreeNode3, 13);
+
+    int binaryTreeSize = getBinaryTreeSize(rootBinaryTreeNode);
+    int binaryTreeHeight = getBinaryTreeHeight(rootBinaryTreeNode);
 
     printf("Tree\n");
-    printf("smallest value: %d\n", smallestBinaryTreeNode->value);
-    printf("highest value: %d\n", highestBinaryTreeNode->value);
-    printf("tree size: %d \n", treeSize);
+    printf("smallest value: %d\n", leftBinaryTreeNode1->value);
+    printf("highest value: %d\n", rightBinaryTreeNode3->value);
+    printf("tree size: %d \n", binaryTreeSize);
+    printf("tree height: %d \n", binaryTreeHeight);
 
     return 0;
 }
