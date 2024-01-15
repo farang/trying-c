@@ -4,7 +4,7 @@
 #define GRAPH_SIZE 5
 
 int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int indexB);
-void setDistanceInfinites(int arr[GRAPH_SIZE]);
+void fillArrayWithIntegers(int arr[GRAPH_SIZE], int value);
 
 int main()
 {
@@ -23,22 +23,16 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
     int visited[GRAPH_SIZE] = {};
     int distanceFromA[GRAPH_SIZE] = {};
 
-    for (int i = 0; i < GRAPH_SIZE; i++)
-    {
-        visited[i] = 1;
-    }
+    fillArrayWithIntegers(distanceFromA, INT_MAX);
+    fillArrayWithIntegers(visited, 1);
 
-    setDistanceInfinites(distanceFromA);
     distanceFromA[indexA] = 0;
 
     int nextToCheckVerticies[GRAPH_SIZE] = {indexA};
     int verticiesLeft = 0;
 
-    int tries = 0;
-
-    while (verticiesLeft != 1 && tries < 20)
+    while (verticiesLeft != 1)
     {
-        tries += 1;
         int nextToCheckVerticiesUpdate[GRAPH_SIZE] = {};
         verticiesLeft = 1;
 
@@ -56,7 +50,9 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
             {
                 nextToCheckVerticiesUpdate[i1] = -1;
                 int vertexNeighborDistance = parentVertexDistance + graph[i1][i];
-                if (visited[i1] == 0 || graph[i1][i] == 0 || distanceFromA[i1] < vertexNeighborDistance)
+                if (visited[i1] == 0 ||
+                    graph[i1][i] == 0 ||
+                    distanceFromA[i1] < vertexNeighborDistance)
                 {
                     continue;
                 }
@@ -82,10 +78,10 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
     return distanceFromA[indexB];
 }
 
-void setDistanceInfinites(int arr[GRAPH_SIZE])
+void fillArrayWithIntegers(int arr[GRAPH_SIZE], int value)
 {
     for (int i = 0; i < GRAPH_SIZE; i++)
     {
-        arr[i] = INT_MAX;
+        arr[i] = value;
     }
 }
