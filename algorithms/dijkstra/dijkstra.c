@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <limits.h>
+#include <time.h>
+#include <string.h>
 
 #define GRAPH_SIZE 5
 
 int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int indexB);
 void fillArrayWithIntegers(int arr[GRAPH_SIZE], int value);
+void dijkstraPerformanceTest(long iterations, int graph[GRAPH_SIZE][GRAPH_SIZE]);
 
 int main()
 {
@@ -13,9 +16,21 @@ int main()
                                          {5, 2, 0, 11, 0},
                                          {18, 0, 11, 0, 0},
                                          {0, 1, 0, 0, 0}};
-    printf("Works %d\n", dijkstraShortestPath(graph, 0, 4));
-
+    printf("The shortest path is: %d\n", dijkstraShortestPath(graph, 0, 4));
+    dijkstraPerformanceTest(50000000, graph);
     return 0;
+}
+
+void dijkstraPerformanceTest(long iterations, int graph[GRAPH_SIZE][GRAPH_SIZE])
+{
+    clock_t starttime, endtime;
+    starttime = clock();
+    for (int i = 0; i <= iterations; i++)
+    {
+        dijkstraShortestPath(graph, 0, 4);
+    }
+    endtime = clock();
+    printf("Performance test passing time: %ld\n", (long)(endtime - starttime));
 }
 
 int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int indexB)
@@ -23,8 +38,12 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
     int visited[GRAPH_SIZE] = {};
     int distanceFromA[GRAPH_SIZE] = {};
 
-    fillArrayWithIntegers(distanceFromA, INT_MAX);
-    fillArrayWithIntegers(visited, 1);
+    for (int i = 0; i < GRAPH_SIZE; i++)
+    {
+        distanceFromA[i] = INT_MAX;
+    }
+
+    memset(visited, 1, sizeof(visited));
 
     distanceFromA[indexA] = 0;
 
@@ -43,17 +62,14 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
                 continue;
             }
 
-            int *parentVertex = graph[i];
-            int parentVertexDistance = distanceFromA[i];
-
             for (int i1 = 0; i1 < GRAPH_SIZE; i1++)
             {
-                nextToCheckVerticiesUpdate[i1] = -1;
-                int vertexNeighborDistance = parentVertexDistance + graph[i1][i];
+                int vertexNeighborDistance = distanceFromA[i] + graph[i1][i];
                 if (visited[i1] == 0 ||
                     graph[i1][i] == 0 ||
                     distanceFromA[i1] < vertexNeighborDistance)
                 {
+                    nextToCheckVerticiesUpdate[i1] = -1;
                     continue;
                 }
 
@@ -76,12 +92,4 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
     }
 
     return distanceFromA[indexB];
-}
-
-void fillArrayWithIntegers(int arr[GRAPH_SIZE], int value)
-{
-    for (int i = 0; i < GRAPH_SIZE; i++)
-    {
-        arr[i] = value;
-    }
 }
