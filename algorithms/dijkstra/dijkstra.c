@@ -14,10 +14,10 @@ void dijkstraPerformanceTest(long iterations, int graph[GRAPH_SIZE][GRAPH_SIZE])
 int main()
 {
     int graph[GRAPH_SIZE][GRAPH_SIZE] = {{0, 4, 5, 18, 0},
-                                         {4, 0, 2, 0, 0},
+                                         {4, 0, 2, 3, 0},
                                          {5, 2, 0, 11, 0},
                                          {18, 0, 11, 0, 0},
-                                         {0, 1, 0, 0, 0}};
+                                         {0, 3, 0, 0, 0}};
     printf("The shortest path is: %d\n", dijkstraShortestPath(graph, 0, 4));
     dijkstraPerformanceTest(50000000, graph);
     return 0;
@@ -62,7 +62,8 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
                 int vertexNeighborDistance = distanceFromA[i] + graph[i1][i];
                 if (visited[i1] == TRUE ||
                     graph[i1][i] == 0 ||
-                    distanceFromA[i1] < vertexNeighborDistance)
+                    distanceFromA[i1] < vertexNeighborDistance ||
+                    i == i1)
                 {
                     nextToCheckVerticiesUpdate[i1] = -1;
                     continue;
