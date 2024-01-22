@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <limits.h>
 #include <time.h>
+#include <stdbool.h>
 
 #define GRAPH_SIZE 5
-
-const int TRUE = 1;
-const int FALSE = 0;
 
 int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int indexB);
 void fillArrayWithIntegers(int arr[GRAPH_SIZE], int value);
@@ -37,18 +35,18 @@ void dijkstraPerformanceTest(long iterations, int graph[GRAPH_SIZE][GRAPH_SIZE])
 
 int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int indexB)
 {
-    int visited[GRAPH_SIZE] = {[0 ... GRAPH_SIZE - 1] = FALSE};
+    int visited[GRAPH_SIZE] = {[0 ... GRAPH_SIZE - 1] = false};
     int distanceFromA[GRAPH_SIZE] = {[0 ... GRAPH_SIZE - 1] = INT_MAX};
 
     distanceFromA[indexA] = 0;
 
     int nextToCheckVerticies[GRAPH_SIZE] = {indexA};
-    int verticiesLeft = TRUE;
+    int verticiesLeft = true;
 
     while (verticiesLeft)
     {
         int nextToCheckVerticiesUpdate[GRAPH_SIZE] = {};
-        verticiesLeft = FALSE;
+        verticiesLeft = false;
 
         for (int i = 0; i < GRAPH_SIZE; i++)
         {
@@ -60,7 +58,7 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
             for (int i1 = 0; i1 < GRAPH_SIZE; i1++)
             {
                 int vertexNeighborDistance = distanceFromA[i] + graph[i1][i];
-                if (visited[i1] == TRUE ||
+                if (visited[i1] == true ||
                     graph[i1][i] == 0 ||
                     distanceFromA[i1] < vertexNeighborDistance ||
                     i == i1)
@@ -74,11 +72,11 @@ int dijkstraShortestPath(int graph[GRAPH_SIZE][GRAPH_SIZE], int indexA, int inde
                 if (visited[i1] == 1)
                 {
                     nextToCheckVerticiesUpdate[i1] = i1;
-                    verticiesLeft = TRUE;
+                    verticiesLeft = true;
                 }
             }
 
-            visited[i] = TRUE;
+            visited[i] = true;
         }
 
         for (int i1 = 0; i1 < GRAPH_SIZE; i1++)
